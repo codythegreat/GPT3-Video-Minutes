@@ -1,0 +1,59 @@
+#cwm-openai-yt-query {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 256px;
+    z-index: 99999999;
+    background-color: #222;
+    color: #fff;
+}
+
+
+#cwm-openai-yt-query header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    cursor: move;
+}
+
+
+#cwm-openai-yt-query header button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+#cwm-openai-yt-query p {
+    margin: 5px;
+    font-size: 1.3rem;
+}
+
+#cwm-openai-yt-query p span {
+    color: #ccc;
+    text-decoration: underline;
+}
+#cwm-openai-yt-query input {
+    user-select: none;
+    width: 242px;
+    margin: 5px 5px;
+    padding: 2px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: #222;
+    color: #fff;
+}
+#cwm-openai-yt-query input:focus {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+#cwm-openai-yt-answer-btn {
+    background-color: #333;
+    display: none;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    width: 100%;
+}
