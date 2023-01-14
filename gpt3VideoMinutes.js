@@ -231,23 +231,6 @@
                 // generate the current minute's summary
                 answers[minute] = await queryOpenAI({ prompt: videoTitle + previousSummaries + transcriptMinuteIncrements[minute] + (minute > 0 ? FIRST_PROMPT_ENDING : SUBSEQUENT_PROMPT_ENDING) });  
 
-                // Do the following:
-                // 1) generate a comma-separated list of key words from our summary
-                // 2) add each word (key) to our `definitions` object, allong with a generated definition
-                // 3) replace each key word in our summary with a span that on hover shows a definition
-                //queryOpenAI({ prompt: answers[minute] + '\n\nGiven the above text snippet, can you generate a comma-separated list of key words?', max_tokens: 12 })
-                    //.then(async response => {
-                        //for (let word of response.trim().split(', ')) {
-                            //if (!definitions[word]) {
-                                //definitions[word] = await queryOpenAI({ prompt: answers[minute] + '\n\n' + `In the context of the above, please concisely define ${word}:`, max_tokens: 64});
-                            //}
-                        //}
-                    //}).then(() => {
-                        //for (const [key, value] of Object.entries(definitions)) {
-                            //answers[minute] = answers[minute].replace(new RegExp(`(?!<[^>]*)(${key})(?![^<]*>)`, 'g'), `<span title="${value}">${key}</span>`);
-                        //}
-                    //});
-
                 isQuerying = false;
             }
 
