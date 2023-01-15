@@ -8,6 +8,7 @@
     var minuteSummaryInterval = null; // contains the setInterval ID so that we can nuke it when user closes div
     var videoURL = null;
 
+    const PLAYER = document.getElementById('movie_player').wrappedJSObject;
     const FIRST_PROMPT_ENDING = '\nGiven the above information, please generate a summary of the current section below:'
     const SUBSEQUENT_PROMPT_ENDING = '\nGiven the above information, please continue generating summaries without repeating information:'
 
@@ -70,13 +71,39 @@
         var header = document.createElement('header');
         header.innerHTML = 'OpenAI Video Minutes';
 
+        // create a div to hold the buttons
+        var buttonDiv = document.createElement('div');
+
+        // create the rewind button
+        var rewindButton = document.createElement('button');
+        rewindButton.innerHTML = '<';
+        rewindButton.addEventListener('click', function() {
+            rewindToNextMinuteMark();
+        });
+        rewindButton.title = "Rewind";
+
+        // create the skip button
+        var skipButton = document.createElement('button');
+        skipButton.innerHTML = '>';
+        skipButton.addEventListener('click', function() {
+            skipToNextMinuteMark();
+        });
+        skipButton.title = "Skip";
+
         // create the "X" button - closes the div
-        var button = document.createElement('button');
-        button.innerHTML = 'X';
-        button.addEventListener('click', function() {
+        var exitButton = document.createElement('button');
+        exitButton.innerHTML = 'X';
+        exitButton.addEventListener('click', function() {
             resetVariables();
             destroyDivAndClearInterval();
         });
+        exitButton.title = "Exit";
+
+        // add each button to our div:
+        buttonDiv.appendChild(rewindButton);
+        buttonDiv.appendChild(skipButton);
+        buttonDiv.appendChild(exitButton);
+        
 
         // create the p element
         var p = document.createElement('p');
@@ -108,8 +135,8 @@
             hideMinimizeButton();
         });
 
-        // add the button and p elements to the header
-        header.appendChild(button);
+        // add the button elements to the header
+        header.appendChild(buttonDiv);
 
         // add the header and p elements to the div
         div.appendChild(header);
@@ -279,9 +306,16 @@
     }
 
     function getCurrentMinute() {
-        let player = document.getElementById('movie_player').wrappedJSObject;
         // since getCurrentTime gives us seconds, simply divide by 60
-        return Math.floor(player.getCurrentTime() / 60);
+        return Math.floor(PLAYER.getCurrentTime() / 60);
+    }
+
+    function rewindToNextMinuteMark() {
+        PLAYER.seekTo((getCurrentMinute() * 60) - 60);
+    }
+
+    function skipToNextMinuteMark() {
+        PLAYER.seekTo((getCurrentMinute() * 60) + 60);
     }
 
     function showMinimizeButton() {
